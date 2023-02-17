@@ -19,8 +19,8 @@ router
     .get('/barang/list/:id_barang', listBarangById)
     .get('/barang/list/search/:nama_barang', listByname)
     .post('/barang/add',upload, insert)
-    .put('/barang/update/:id_barang',deleted,upload, update)
-    .delete('/barang/delete/:id_barang',deleted, destroy);
+    .put('/barang/update/:id_barang',upload, update)
+    .delete('/barang/delete/:id_barang', destroy);
     
 // router
 //   .get('/user/list', jwtAuth, isAdmin, list)

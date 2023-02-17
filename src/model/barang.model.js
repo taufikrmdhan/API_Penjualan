@@ -2,7 +2,7 @@
 const db = require('../config/db');
 
 const barangModel = {
-    insert: (nama_barang, harga_beli, harga_jual, stok, foto_barang) => new Promise((resolve, reject) => {
+    insert: ({nama_barang, harga_beli, harga_jual, stok, foto_barang}) => new Promise((resolve, reject) => {
         db.query(`INSERT INTO barang (nama_barang, harga_beli, harga_jual, stok, foto_barang) VALUES ('${nama_barang}', ${harga_beli}, ${harga_jual}, ${stok}, '${foto_barang}')`, (err, result) => {
             if (err) {
                 reject(err);
@@ -29,7 +29,7 @@ const barangModel = {
             }
         });
     }),
-    update: (id_barang, nama_barang, harga_beli, harga_jual, stok, foto_barang) => new Promise((resolve, reject) => {
+    update: ({id_barang, nama_barang, harga_beli, harga_jual, stok, foto_barang}) => new Promise((resolve, reject) => {
         db.query(`UPDATE barang SET nama_barang = '${nama_barang}', harga_beli = ${harga_beli}, harga_jual = ${harga_jual}, stok = ${stok}, foto_barang = '${foto_barang}' WHERE id_barang = ${id_barang}`, (err, result) => {
             if (err) {
                 reject(err);

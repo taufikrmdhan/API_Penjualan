@@ -1,16 +1,21 @@
 // const userModel = require('../model/user.model');
 const barangModel = require('../model/barang.model');
 const { success, failed } = require('../helper/response');
+const cloudinary = require("../helper/cloudinary");
 // const bcrypt = require('bcrypt');
 
 const barangController = {
-    insert: (req, res) => {
+    insert: async (req, res) => {
         const {
             nama_barang, harga_beli, harga_jual, stok
         } = req.body;
-        const foto_barang = req.file.filename;
+        const image = await cloudinary.uploader.upload(req.file.path);
+        const data = {
+            nama_barang, harga_beli, harga_jual, stok, foto_barang: image.url
+        }
+        // const foto_barang = req.file.filename;
         barangModel
-            .insert(nama_barang, harga_beli, harga_jual, stok, foto_barang)
+            .insert(data)
             .then((result) => {
                 success(res, null, 'success', 'success insert data');
             })
@@ -53,14 +58,19 @@ const barangController = {
                 failed(res, err, 'failed', 'failed get data');
             });
     },
-    update: (req, res) => {
+    update: async(req, res) => {
         const { id_barang } = req.params;
         const {
             nama_barang, harga_beli, harga_jual, stok
         } = req.body;
-        const foto_barang = req.file.filename;
+        // const foto_barang = req.file.filename;
+        const image = await cloudinary.uploader.upload(req.file.path);
+        const data = {
+            id_barang,nama_barang, harga_beli, harga_jual, stok, foto_barang: image.url
+        }
+        console.log(data);
         barangModel
-            .update(id_barang, nama_barang, harga_beli, harga_jual, stok, foto_barang)
+            .update(data)
             .then((result) => {
                 success(res, null, 'success', 'success update data');
             })
